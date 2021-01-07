@@ -260,6 +260,7 @@ func runScanner(detector scanners.ScannerInterface, searchDir string) scannerOut
 	for _, warning := range projectWarnings {
 		data := detectorErrorData(detector.Name(), errors.New(warning))
 		analytics.LogWarn(optionsFailedTag, data, "%s detector Options warning", detector.Name())
+		//log.TWarnf("Analyzer failed, error: %s", err)
 	}
 
 	if err != nil {

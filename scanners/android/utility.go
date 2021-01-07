@@ -123,7 +123,7 @@ func checkLocalProperties(projectDir string) error {
 		return err
 	}
 	if exist {
-		return fmt.Errorf(`The local.properties file must NOT be checked into Version Control Systems, as it contains information specific to your local configuration.
+		return fmt.Errorf(`The local.properties file should NOT be checked into Version Control Systems, as it contains information specific to your local configuration.
 The location of the file is: %s`, localPropertiesPth)
 	}
 	return nil
