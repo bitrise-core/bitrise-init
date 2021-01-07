@@ -59,6 +59,12 @@ func (scanner *Scanner) Options() (models.OptionNode, models.Warnings, models.Ic
 	foundOptions := false
 	var lastErr error = nil
 	for _, projectRoot := range scanner.ProjectRoots {
+		if err := checkLocalProperties(projectRoot); err != nil {
+			//warnings = append(warnings, warning.Error())
+			lastErr = err
+			continue
+		}
+
 		if err := checkGradlew(projectRoot); err != nil {
 			lastErr = err
 			continue
