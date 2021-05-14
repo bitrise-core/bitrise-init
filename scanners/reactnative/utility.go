@@ -15,11 +15,11 @@ func CollectPackageJSONFiles(searchDir string) ([]string, error) {
 		return nil, err
 	}
 
-	filters := []utility.FilterFunc{
-		utility.BaseFilter("package.json", true),
-		utility.ComponentFilter("node_modules", false),
+	filters := []pathutil.FilterFunc{
+		pathutil.BaseFilter("package.json", true),
+		pathutil.ComponentFilter("node_modules", false),
 	}
-	packageFileList, err := utility.FilterPaths(fileList, filters...)
+	packageFileList, err := pathutil.FilterPaths(fileList, filters...)
 	if err != nil {
 		return nil, err
 	}

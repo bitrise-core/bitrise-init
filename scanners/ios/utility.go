@@ -87,7 +87,7 @@ const cartfileBase = "Cartfile"
 const cartfileResolvedBase = "Cartfile.resolved"
 
 // AllowCartfileBaseFilter ...
-var AllowCartfileBaseFilter = utility.BaseFilter(cartfileBase, true)
+var AllowCartfileBaseFilter = pathutil.BaseFilter(cartfileBase, true)
 
 // ConfigDescriptor ...
 type ConfigDescriptor struct {

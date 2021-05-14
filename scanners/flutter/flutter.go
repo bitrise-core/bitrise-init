@@ -83,12 +83,12 @@ func findProjectLocations(searchDir string) ([]string, error) {
 		return nil, err
 	}
 
-	filters := []utility.FilterFunc{
-		utility.BaseFilter("pubspec.yaml", true),
-		utility.ComponentFilter("node_modules", false),
+	filters := []pathutil.FilterFunc{
+		pathutil.BaseFilter("pubspec.yaml", true),
+		pathutil.ComponentFilter("node_modules", false),
 	}
 
-	paths, err := utility.FilterPaths(fileList, filters...)
+	paths, err := pathutil.FilterPaths(fileList, filters...)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func findWorkspaceLocations(projectLocation string) ([]string, error) {
 		fileList[i] = filepath.Join(projectLocation, file)
 	}
 
-	filters := []utility.FilterFunc{
+	filters := []pathutil.FilterFunc{
 		ios.AllowXCWorkspaceExtFilter,
 		ios.AllowIsDirectoryFilter,
 		ios.ForbidEmbeddedWorkspaceRegexpFilter,
@@ -122,7 +122,7 @@ func findWorkspaceLocations(projectLocation string) ([]string, error) {
 		ios.ForbidNodeModulesComponentFilter,
 	}
 
-	return utility.FilterPaths(fileList, filters...)
+	return pathutil.FilterPaths(fileList, filters...)
 }
 
 // DetectPlatform ...

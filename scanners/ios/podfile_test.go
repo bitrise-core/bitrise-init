@@ -7,7 +7,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/bitrise-io/bitrise-init/utility"
 	"github.com/bitrise-io/go-utils/fileutil"
 	"github.com/bitrise-io/go-utils/pathutil"
 	"github.com/bitrise-io/go-xcode/xcodeproj"
@@ -32,7 +31,7 @@ func TestAllowPodfileBaseFilter(t *testing.T) {
 			"/Users/bitrise/ios-no-shared-schemes/test.framework/Checkouts/Result/Podfile",
 		}
 
-		actualPaths, err := utility.FilterPaths(absPaths, AllowPodfileBaseFilter)
+		actualPaths, err := pathutil.FilterPaths(absPaths, AllowPodfileBaseFilter)
 		require.NoError(t, err)
 		require.Equal(t, expectedPaths, actualPaths)
 	}
@@ -55,7 +54,7 @@ func TestAllowPodfileBaseFilter(t *testing.T) {
 			"ios-no-shared-schemes/test.framework/Checkouts/Result/Podfile",
 		}
 
-		actualPaths, err := utility.FilterPaths(relPaths, AllowPodfileBaseFilter)
+		actualPaths, err := pathutil.FilterPaths(relPaths, AllowPodfileBaseFilter)
 		require.NoError(t, err)
 		require.Equal(t, expectedPaths, actualPaths)
 	}

@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/bitrise-io/bitrise-init/scanners/xamarin"
-	"github.com/bitrise-io/bitrise-init/utility"
 	"github.com/bitrise-io/go-utils/pathutil"
 	"github.com/bitrise-io/go-xcode/xcodeproj"
 )
@@ -33,36 +32,36 @@ const (
 )
 
 // AllowXcodeProjExtFilter ...
-var AllowXcodeProjExtFilter = utility.ExtensionFilter(xcodeproj.XCodeProjExt, true)
+var AllowXcodeProjExtFilter = pathutil.ExtensionFilter(xcodeproj.XCodeProjExt, true)
 
 // AllowXCWorkspaceExtFilter ...
-var AllowXCWorkspaceExtFilter = utility.ExtensionFilter(xcodeproj.XCWorkspaceExt, true)
+var AllowXCWorkspaceExtFilter = pathutil.ExtensionFilter(xcodeproj.XCWorkspaceExt, true)
 
 // AllowIsDirectoryFilter ...
-var AllowIsDirectoryFilter = utility.IsDirectoryFilter(true)
+var AllowIsDirectoryFilter = pathutil.IsDirectoryFilter(true)
 
-var containsContentsXcworkspacedata = utility.DirectoryContainsFile("contents.xcworkspacedata")
+var containsContentsXcworkspacedata = pathutil.DirectoryContainsFileFilter("contents.xcworkspacedata")
 
 // ForbidEmbeddedWorkspaceRegexpFilter ...
-var ForbidEmbeddedWorkspaceRegexpFilter = utility.RegexpFilter(embeddedWorkspacePathPattern, false)
+var ForbidEmbeddedWorkspaceRegexpFilter = pathutil.RegexpFilter(embeddedWorkspacePathPattern, false)
 
 // ForbidGitDirComponentFilter ...
-var ForbidGitDirComponentFilter = utility.ComponentFilter(gitDirName, false)
+var ForbidGitDirComponentFilter = pathutil.ComponentFilter(gitDirName, false)
 
 // ForbidPodsDirComponentFilter ...
-var ForbidPodsDirComponentFilter = utility.ComponentFilter(podsDirName, false)
+var ForbidPodsDirComponentFilter = pathutil.ComponentFilter(podsDirName, false)
 
 // ForbidCarthageDirComponentFilter ...
-var ForbidCarthageDirComponentFilter = utility.ComponentFilter(carthageDirName, false)
+var ForbidCarthageDirComponentFilter = pathutil.ComponentFilter(carthageDirName, false)
 
 // ForbidCordovaLibDirComponentFilter ...
-var ForbidCordovaLibDirComponentFilter = utility.ComponentFilter(cordovaLibDirName, false)
+var ForbidCordovaLibDirComponentFilter = pathutil.ComponentFilter(cordovaLibDirName, false)
 
 // ForbidFramworkComponentWithExtensionFilter ...
-var ForbidFramworkComponentWithExtensionFilter = utility.ComponentWithExtensionFilter(frameworkExt, false)
+var ForbidFramworkComponentWithExtensionFilter = pathutil.ComponentWithExtensionFilter(frameworkExt, false)
 
 // ForbidNodeModulesComponentFilter ...
-var ForbidNodeModulesComponentFilter = utility.ComponentFilter(xamarin.NodeModulesDirName, false)
+var ForbidNodeModulesComponentFilter = pathutil.ComponentFilter(xamarin.NodeModulesDirName, false)
 
 // AllowIphoneosSDKFilter ...
 var AllowIphoneosSDKFilter = SDKFilter("iphoneos", true)
@@ -71,7 +70,7 @@ var AllowIphoneosSDKFilter = SDKFilter("iphoneos", true)
 var AllowMacosxSDKFilter = SDKFilter("macosx", true)
 
 // SDKFilter ...
-func SDKFilter(sdk string, allowed bool) utility.FilterFunc {
+func SDKFilter(sdk string, allowed bool) pathutil.FilterFunc {
 	return func(pth string) (bool, error) {
 		found := false
 
@@ -199,7 +198,7 @@ func CreateStandaloneProjectsAndWorkspaces(projectFiles, workspaceFiles []string
 
 // FilterRelevantProjectFiles ...
 func FilterRelevantProjectFiles(fileList []string, projectTypes ...XcodeProjectType) ([]string, error) {
-	filters := []utility.FilterFunc{
+	filters := []pathutil.FilterFunc{
 		AllowXcodeProjExtFilter,
 		AllowIsDirectoryFilter,
 		ForbidEmbeddedWorkspaceRegexpFilter,
@@ -220,12 +219,12 @@ func FilterRelevantProjectFiles(fileList []string, projectTypes ...XcodeProjectT
 		}
 	}
 
-	return utility.FilterPaths(fileList, filters...)
+	return pathutil.FilterPaths(fileList, filters...)
 }
 
 // FilterRelevantWorkspaceFiles ...
 func FilterRelevantWorkspaceFiles(fileList []string, projectTypes ...XcodeProjectType) ([]string, error) {
-	filters := []utility.FilterFunc{
+	filters := []pathutil.FilterFunc{
 		AllowXCWorkspaceExtFilter,
 		AllowIsDirectoryFilter,
 		containsContentsXcworkspacedata,
@@ -247,12 +246,12 @@ func FilterRelevantWorkspaceFiles(fileList []string, projectTypes ...XcodeProjec
 		}
 	}
 
-	return utility.FilterPaths(fileList, filters...)
+	return pathutil.FilterPaths(fileList, filters...)
 }
 
 // FilterRelevantPodfiles ...
 func FilterRelevantPodfiles(fileList []string) ([]string, error) {
-	return utility.FilterPaths(fileList,
+	return pathutil.FilterPaths(fileList,
 		AllowPodfileBaseFilter,
 		ForbidGitDirComponentFilter,
 		ForbidPodsDirComponentFilter,
@@ -264,7 +263,7 @@ func FilterRelevantPodfiles(fileList []string) ([]string, error) {
 
 // FilterRelevantCartFile ...
 func FilterRelevantCartFile(fileList []string) ([]string, error) {
-	return utility.FilterPaths(fileList,
+	return pathutil.FilterPaths(fileList,
 		AllowCartfileBaseFilter,
 		ForbidGitDirComponentFilter,
 		ForbidPodsDirComponentFilter,
